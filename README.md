@@ -1,4 +1,7 @@
-# MasterCollegeInfo
-# ColleageInfo
-# ColleageInfo
-# ColleageInfo
+# 浙江省计算机考研院校信息汇总
+
+## Republic 
+## 浙大宁波理工学院
+## 2024届计算机专业考生
+
+## 欢迎在这里分享交流！！
