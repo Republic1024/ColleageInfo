@@ -4,7 +4,7 @@ import pandas as pd
 
 
 ```python
-df = pd.read_excel("/Users/republic/考研信息/浙江工业大学/计算机学院各专业2022年硕士研究生复试考生名单.xlsx")
+df = pd.read_excel("../浙江工业大学/计算机学院各专业2022年硕士研究生复试考生名单.xlsx")
 ```
 
 
@@ -193,7 +193,9 @@ df.info()
 
 
 ```python
-df.groupby(by=['录取专业'])['总分'].describe()
+df_1 = df.groupby(by=['录取专业'])['总分'].describe()
+df_1.to_excel("各专业分数情况.xlsx")
+df_1
 ```
 
 
@@ -284,5 +286,5 @@ df.groupby(by=['录取专业'])['总分'].describe()
 ```
 
     [NbConvertApp] Converting notebook process_data.ipynb to markdown
-    [NbConvertApp] Writing 5349 bytes to process_data.md
+    [NbConvertApp] Writing 5391 bytes to process_data.md
 
