@@ -286,5 +286,5 @@ df_1
 ```
 
     [NbConvertApp] Converting notebook process_data.ipynb to markdown
-    [NbConvertApp] Writing 5391 bytes to process_data.md
+    [NbConvertApp] Writing 5373 bytes to process_data.md
 
