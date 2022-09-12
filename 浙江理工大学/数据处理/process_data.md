@@ -1,0 +1,1252 @@
+```python
+import pandas as pd
+```
+
+
+```python
+df = pd.read_excel("../浙江工业大学/计算机/计算机学院各专业2022年硕士研究生复试考生名单.xlsx")
+```
+
+
+```python
+df[:5]
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>序号</th>
+      <th>考生类型</th>
+      <th>学生代码</th>
+      <th>姓名</th>
+      <th>第一志愿</th>
+      <th>大类专业</th>
+      <th>录取专业</th>
+      <th>专业类型</th>
+      <th>外语</th>
+      <th>政治</th>
+      <th>业务课一</th>
+      <th>业务课二</th>
+      <th>总分</th>
+      <th>录取代码</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210006660</td>
+      <td>陈天涯</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>80</td>
+      <td>73</td>
+      <td>110</td>
+      <td>120</td>
+      <td>383</td>
+      <td>ZG0812-001</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210009385</td>
+      <td>伊秋华</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>74</td>
+      <td>66</td>
+      <td>111</td>
+      <td>130</td>
+      <td>381</td>
+      <td>ZG0812-002</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210006633</td>
+      <td>吴康惠</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>78</td>
+      <td>66</td>
+      <td>117</td>
+      <td>120</td>
+      <td>381</td>
+      <td>ZG0812-003</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210009382</td>
+      <td>严涵婷</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>77</td>
+      <td>77</td>
+      <td>99</td>
+      <td>121</td>
+      <td>374</td>
+      <td>ZG0812-004</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210006653</td>
+      <td>沈哲辉</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>69</td>
+      <td>73</td>
+      <td>128</td>
+      <td>104</td>
+      <td>374</td>
+      <td>ZG0812-005</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+```python
+df.columns
+```
+
+
+
+
+    Index(['序号', '考生类型', '学生代码', '姓名', '第一志愿', '大类专业', '录取专业', '专业类型', '外语', '政治',
+           '业务课一', '业务课二', '总分', '录取代码'],
+          dtype='object')
+
+
+
+
+```python
+
+# pattern=r'^((?!士兵专项).)*$'
+# df[df['录取代码'].str.extract(pattern)]
+df = df[~df['录取代码'].str.contains('士兵')]
+```
+
+
+```python
+df.info()
+```
+
+    <class 'pandas.core.frame.DataFrame'>
+    Int64Index: 390 entries, 0 to 389
+    Data columns (total 14 columns):
+     #   Column  Non-Null Count  Dtype 
+    ---  ------  --------------  ----- 
+     0   序号      390 non-null    int64 
+     1   考生类型    390 non-null    object
+     2   学生代码    390 non-null    int64 
+     3   姓名      390 non-null    object
+     4   第一志愿    390 non-null    object
+     5   大类专业    390 non-null    object
+     6   录取专业    390 non-null    object
+     7   专业类型    390 non-null    object
+     8   外语      390 non-null    int64 
+     9   政治      390 non-null    int64 
+     10  业务课一    390 non-null    int64 
+     11  业务课二    390 non-null    int64 
+     12  总分      390 non-null    int64 
+     13  录取代码    390 non-null    object
+    dtypes: int64(7), object(7)
+    memory usage: 45.7+ KB
+
+
+
+```python
+df_1 = df.groupby(by=['录取专业'])['总分'].describe()
+df_1.to_excel("各专业分数情况.xlsx")
+pd.merge(df[df.总分<330],df[df.录取专业.str.contains('计算机')])
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>序号</th>
+      <th>考生类型</th>
+      <th>学生代码</th>
+      <th>姓名</th>
+      <th>第一志愿</th>
+      <th>大类专业</th>
+      <th>录取专业</th>
+      <th>专业类型</th>
+      <th>外语</th>
+      <th>政治</th>
+      <th>业务课一</th>
+      <th>业务课二</th>
+      <th>总分</th>
+      <th>录取代码</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>45</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210013859</td>
+      <td>李玉诚</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>58</td>
+      <td>68</td>
+      <td>88</td>
+      <td>115</td>
+      <td>329</td>
+      <td>ZG0812-045</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>46</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210006581</td>
+      <td>梅寒箫</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>63</td>
+      <td>71</td>
+      <td>93</td>
+      <td>102</td>
+      <td>329</td>
+      <td>ZG0812-046</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>47</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210006597</td>
+      <td>马煜皓</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>66</td>
+      <td>75</td>
+      <td>85</td>
+      <td>102</td>
+      <td>328</td>
+      <td>ZG0812-047</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>48</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210006665</td>
+      <td>孟炜浩</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>68</td>
+      <td>69</td>
+      <td>69</td>
+      <td>121</td>
+      <td>327</td>
+      <td>ZG0812-048</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>49</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210016398</td>
+      <td>何泽辉</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>60</td>
+      <td>71</td>
+      <td>104</td>
+      <td>92</td>
+      <td>327</td>
+      <td>ZG0812-049</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>50</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210011587</td>
+      <td>陈之龙</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>62</td>
+      <td>64</td>
+      <td>88</td>
+      <td>112</td>
+      <td>326</td>
+      <td>ZG0812-050</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>51</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210006585</td>
+      <td>张智超</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>56</td>
+      <td>68</td>
+      <td>88</td>
+      <td>113</td>
+      <td>325</td>
+      <td>ZG0812-051</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>52</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210014583</td>
+      <td>朱亚婷</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>68</td>
+      <td>71</td>
+      <td>83</td>
+      <td>103</td>
+      <td>325</td>
+      <td>ZG0812-052</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>53</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210006574</td>
+      <td>黄伟口</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>50</td>
+      <td>73</td>
+      <td>88</td>
+      <td>112</td>
+      <td>323</td>
+      <td>ZG0812-053</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>54</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210006567</td>
+      <td>柴水亮</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>60</td>
+      <td>69</td>
+      <td>88</td>
+      <td>106</td>
+      <td>323</td>
+      <td>ZG0812-054</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>55</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210012650</td>
+      <td>李永杰</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>58</td>
+      <td>70</td>
+      <td>103</td>
+      <td>91</td>
+      <td>322</td>
+      <td>ZG0812-055</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>56</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210006615</td>
+      <td>王辰</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>55</td>
+      <td>69</td>
+      <td>87</td>
+      <td>110</td>
+      <td>321</td>
+      <td>ZG0812-056</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>57</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210012877</td>
+      <td>郝张建</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>62</td>
+      <td>68</td>
+      <td>90</td>
+      <td>101</td>
+      <td>321</td>
+      <td>ZG0812-057</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>58</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210015278</td>
+      <td>刘亚鹏</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>53</td>
+      <td>68</td>
+      <td>88</td>
+      <td>111</td>
+      <td>320</td>
+      <td>ZG0812-058</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>59</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210006546</td>
+      <td>李越</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>64</td>
+      <td>62</td>
+      <td>95</td>
+      <td>99</td>
+      <td>320</td>
+      <td>ZG0812-059</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>60</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210006613</td>
+      <td>宋依荞</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>62</td>
+      <td>65</td>
+      <td>81</td>
+      <td>110</td>
+      <td>318</td>
+      <td>ZG0812-060</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>61</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210006589</td>
+      <td>潘伟</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>67</td>
+      <td>71</td>
+      <td>72</td>
+      <td>108</td>
+      <td>318</td>
+      <td>ZG0812-061</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>62</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210006651</td>
+      <td>张冰洋</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>73</td>
+      <td>68</td>
+      <td>69</td>
+      <td>108</td>
+      <td>318</td>
+      <td>ZG0812-062</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>63</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210006636</td>
+      <td>邱家鑫</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>64</td>
+      <td>63</td>
+      <td>104</td>
+      <td>87</td>
+      <td>318</td>
+      <td>ZG0812-063</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>64</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210006609</td>
+      <td>游齐运</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>57</td>
+      <td>70</td>
+      <td>92</td>
+      <td>98</td>
+      <td>317</td>
+      <td>ZG0812-064</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>65</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210006570</td>
+      <td>俞鉴豪</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>52</td>
+      <td>76</td>
+      <td>99</td>
+      <td>90</td>
+      <td>317</td>
+      <td>ZG0812-065</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>66</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210006663</td>
+      <td>周裕杰</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>54</td>
+      <td>77</td>
+      <td>81</td>
+      <td>104</td>
+      <td>316</td>
+      <td>ZG0812-066</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>67</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210006662</td>
+      <td>项剑元</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>49</td>
+      <td>69</td>
+      <td>100</td>
+      <td>98</td>
+      <td>316</td>
+      <td>ZG0812-067</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>68</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210012620</td>
+      <td>郑滋辉</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>55</td>
+      <td>72</td>
+      <td>97</td>
+      <td>92</td>
+      <td>316</td>
+      <td>ZG0812-068</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>69</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210006623</td>
+      <td>蒋悦</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>56</td>
+      <td>74</td>
+      <td>82</td>
+      <td>103</td>
+      <td>315</td>
+      <td>ZG0812-069</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>70</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210013862</td>
+      <td>肖坤</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>48</td>
+      <td>68</td>
+      <td>85</td>
+      <td>113</td>
+      <td>314</td>
+      <td>ZG0812-070</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>71</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210015466</td>
+      <td>甘纪松</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>66</td>
+      <td>72</td>
+      <td>81</td>
+      <td>94</td>
+      <td>313</td>
+      <td>ZG0812-071</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>72</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210013252</td>
+      <td>陈家辉</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>67</td>
+      <td>67</td>
+      <td>87</td>
+      <td>92</td>
+      <td>313</td>
+      <td>ZG0812-072</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>73</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210006550</td>
+      <td>徐平</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>66</td>
+      <td>63</td>
+      <td>98</td>
+      <td>86</td>
+      <td>313</td>
+      <td>ZG0812-073</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>74</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210006620</td>
+      <td>程江浩</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>54</td>
+      <td>66</td>
+      <td>76</td>
+      <td>116</td>
+      <td>312</td>
+      <td>ZG0812-074</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>75</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210016234</td>
+      <td>郑峻励</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>60</td>
+      <td>70</td>
+      <td>67</td>
+      <td>115</td>
+      <td>312</td>
+      <td>ZG0812-075</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>76</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210011385</td>
+      <td>杨祥益</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>59</td>
+      <td>70</td>
+      <td>97</td>
+      <td>86</td>
+      <td>312</td>
+      <td>ZG0812-076</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>77</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210006554</td>
+      <td>陈潇湘</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>75</td>
+      <td>67</td>
+      <td>72</td>
+      <td>97</td>
+      <td>311</td>
+      <td>ZG0812-077</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>78</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210016271</td>
+      <td>芮静</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>68</td>
+      <td>71</td>
+      <td>84</td>
+      <td>87</td>
+      <td>310</td>
+      <td>ZG0812-078</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>79</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210006641</td>
+      <td>廖嘉棋</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>56</td>
+      <td>67</td>
+      <td>106</td>
+      <td>81</td>
+      <td>310</td>
+      <td>ZG0812-079</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>80</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210006611</td>
+      <td>叶玉恒</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>55</td>
+      <td>61</td>
+      <td>72</td>
+      <td>121</td>
+      <td>309</td>
+      <td>ZG0812-080</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>81</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210002291</td>
+      <td>韦亚龙</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>58</td>
+      <td>69</td>
+      <td>74</td>
+      <td>107</td>
+      <td>308</td>
+      <td>ZG0812-081</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>82</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210006638</td>
+      <td>项嘉豪</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>63</td>
+      <td>69</td>
+      <td>61</td>
+      <td>114</td>
+      <td>307</td>
+      <td>ZG0812-082</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>83</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210016518</td>
+      <td>李瑞泽</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>64</td>
+      <td>64</td>
+      <td>77</td>
+      <td>101</td>
+      <td>306</td>
+      <td>ZG0812-083</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>84</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210014883</td>
+      <td>岳亚辉</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>63</td>
+      <td>65</td>
+      <td>94</td>
+      <td>84</td>
+      <td>306</td>
+      <td>ZG0812-084</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>85</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210009384</td>
+      <td>周浩琪</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>62</td>
+      <td>65</td>
+      <td>69</td>
+      <td>109</td>
+      <td>305</td>
+      <td>ZG0812-085</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>86</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210008843</td>
+      <td>薛欣</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>62</td>
+      <td>77</td>
+      <td>71</td>
+      <td>95</td>
+      <td>305</td>
+      <td>ZG0812-086</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>87</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210006621</td>
+      <td>傅俊盛</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>54</td>
+      <td>72</td>
+      <td>84</td>
+      <td>94</td>
+      <td>304</td>
+      <td>ZG0812-087</td>
+    </tr>
+    <tr>
+      <th>43</th>
+      <td>88</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210015126</td>
+      <td>王慧慧</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>56</td>
+      <td>70</td>
+      <td>73</td>
+      <td>104</td>
+      <td>303</td>
+      <td>ZG0812-088</td>
+    </tr>
+    <tr>
+      <th>44</th>
+      <td>89</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210013255</td>
+      <td>朱哲毅</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>46</td>
+      <td>71</td>
+      <td>91</td>
+      <td>95</td>
+      <td>303</td>
+      <td>ZG0812-089</td>
+    </tr>
+    <tr>
+      <th>45</th>
+      <td>90</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210010323</td>
+      <td>袁狄剑</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>61</td>
+      <td>71</td>
+      <td>77</td>
+      <td>94</td>
+      <td>303</td>
+      <td>ZG0812-090</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>91</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210016803</td>
+      <td>罗哲</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>57</td>
+      <td>61</td>
+      <td>83</td>
+      <td>101</td>
+      <td>302</td>
+      <td>ZG0812-091</td>
+    </tr>
+    <tr>
+      <th>47</th>
+      <td>92</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210006625</td>
+      <td>张宁康</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>51</td>
+      <td>62</td>
+      <td>100</td>
+      <td>89</td>
+      <td>302</td>
+      <td>ZG0812-092</td>
+    </tr>
+    <tr>
+      <th>48</th>
+      <td>93</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210006674</td>
+      <td>陈孜豪</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>55</td>
+      <td>71</td>
+      <td>88</td>
+      <td>88</td>
+      <td>302</td>
+      <td>ZG0812-093</td>
+    </tr>
+    <tr>
+      <th>49</th>
+      <td>94</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210002007</td>
+      <td>郭旭</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>53</td>
+      <td>68</td>
+      <td>100</td>
+      <td>81</td>
+      <td>302</td>
+      <td>ZG0812-094</td>
+    </tr>
+    <tr>
+      <th>50</th>
+      <td>95</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210006650</td>
+      <td>赵家鹏</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>55</td>
+      <td>67</td>
+      <td>70</td>
+      <td>109</td>
+      <td>301</td>
+      <td>ZG0812-095</td>
+    </tr>
+    <tr>
+      <th>51</th>
+      <td>96</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210000780</td>
+      <td>白云芳</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>70</td>
+      <td>67</td>
+      <td>89</td>
+      <td>75</td>
+      <td>301</td>
+      <td>ZG0812-096</td>
+    </tr>
+    <tr>
+      <th>52</th>
+      <td>97</td>
+      <td>第一批一志愿考生</td>
+      <td>103372210010718</td>
+      <td>潘柳进</td>
+      <td>浙江工业大学</td>
+      <td>081200计算机科学与技术</td>
+      <td>081200计算机科学与技术</td>
+      <td>全日制</td>
+      <td>66</td>
+      <td>76</td>
+      <td>81</td>
+      <td>77</td>
+      <td>300</td>
+      <td>ZG0812-097</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+```python
+df.groupby(by=['录取专业'])['总分'].describe()
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
+    </tr>
+    <tr>
+      <th>录取专业</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>081200计算机科学与技术</th>
+      <td>97.0</td>
+      <td>330.185567</td>
+      <td>21.762128</td>
+      <td>300.0</td>
+      <td>313.0</td>
+      <td>327.0</td>
+      <td>345.0</td>
+      <td>383.0</td>
+    </tr>
+    <tr>
+      <th>083500软件工程</th>
+      <td>41.0</td>
+      <td>317.365854</td>
+      <td>19.852904</td>
+      <td>284.0</td>
+      <td>302.0</td>
+      <td>320.0</td>
+      <td>329.0</td>
+      <td>360.0</td>
+    </tr>
+    <tr>
+      <th>085400电子信息</th>
+      <td>252.0</td>
+      <td>360.456349</td>
+      <td>18.752797</td>
+      <td>318.0</td>
+      <td>350.0</td>
+      <td>360.0</td>
+      <td>372.0</td>
+      <td>407.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+```python
+df.groupby(by=['录取专业'])
+```
+
+
+
+
+    <pandas.core.groupby.generic.DataFrameGroupBy object at 0x1206cb400>
+
+
+
+
+```python
+!jupyter nbconvert --to markdown process_data.ipynb 
+```
+
+    [NbConvertApp] Converting notebook process_data.ipynb to markdown
+    [NbConvertApp] Writing 23234 bytes to process_data.md
+
